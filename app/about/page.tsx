@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SectionTitle } from '@/components/SectionTitle';
+import { bookingHref } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: '運営方針',
@@ -13,7 +14,7 @@ export default function AboutPage() {
       <SectionTitle
         eyebrow="About"
         title="運営方針"
-        description="Lumiere Social Consulting は、表現の魅力とプラットフォーム規約の両立を重視します。"
+        description="Lumiere Social は、表現の魅力とプラットフォーム規約の両立を重視します。"
       />
 
       <section className="grid gap-4 md:grid-cols-2">
@@ -41,10 +42,10 @@ export default function AboutPage() {
           <li>・規約改定やアルゴリズム変更時は、方針を速やかに見直します。</li>
         </ul>
         <Link
-          href="/contact"
+          href={bookingHref}
           className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-black transition hover:opacity-85"
         >
-          無料相談する
+          無料相談（15分）
         </Link>
       </section>
     </div>

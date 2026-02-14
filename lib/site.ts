@@ -1,9 +1,15 @@
+const fallbackSiteUrl = 'https://lumiere-social-consulting-site.vercel.app';
+
 export const siteConfig = {
-  name: 'Lumiere Social Consulting',
+  name: 'Lumiere Social',
   description:
-    '規約配慮と世界観設計で、ナイトワーク・接客ビジネスのInstagram運用を問い合わせ導線まで最適化するSNSコンサルティング。',
-  url: 'https://example.com'
+    '規約配慮と健全寄りの世界観設計で、ナイトワーク・接客ビジネスのInstagram運用を問い合わせ導線まで最適化するSNS支援。',
+  url: process.env.NEXT_PUBLIC_SITE_URL?.trim() || fallbackSiteUrl
 };
+
+export const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL?.trim() || '';
+export const bookingHref = bookingUrl || '/contact';
+export const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || 'hello@lumiere-social.jp';
 
 export const strengths = [
   {

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { bookingHref } from '@/lib/site';
 
 const navItems = [
   { href: '/', label: 'ホーム' },
@@ -24,10 +25,10 @@ export function Header() {
             ))}
           </nav>
           <Link
-            href="/contact"
+            href={bookingHref}
             className="rounded-full border border-accent px-4 py-2 text-xs font-medium uppercase tracking-[0.16em] text-accent transition hover:bg-accent hover:text-black"
           >
-            無料相談
+            無料相談（15分）
           </Link>
         </div>
         <nav className="mt-3 flex gap-4 overflow-x-auto whitespace-nowrap text-xs text-white/75 md:hidden">

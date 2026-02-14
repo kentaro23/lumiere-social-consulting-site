@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { cases } from '@/lib/site';
+import { cases, bookingHref } from '@/lib/site';
 import { SectionTitle } from '@/components/SectionTitle';
 
 export const metadata: Metadata = {
@@ -53,10 +53,10 @@ export default function CasesPage() {
           リーチだけでなく、保存率・プロフィール遷移率・DM率を見ながら、導線改善を優先順位付きでご提案します。
         </p>
         <Link
-          href="/contact"
+          href={bookingHref}
           className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-black transition hover:opacity-85"
         >
-          相談してみる
+          無料相談（15分）
         </Link>
       </section>
     </div>

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CTASection } from '@/components/CTASection';
 import { SectionTitle } from '@/components/SectionTitle';
-import { servicePackages } from '@/lib/site';
+import { bookingHref, servicePackages } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'サービス詳細',
@@ -62,10 +62,10 @@ export default function ServicesPage() {
           <li>・DMまたは外部リンクでの受け皿整備状況</li>
         </ul>
         <Link
-          href="/contact"
+          href={bookingHref}
           className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-black transition hover:opacity-85"
         >
-          無料相談へ進む
+          無料相談（15分）
         </Link>
       </section>
 

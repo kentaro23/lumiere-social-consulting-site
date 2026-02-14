@@ -22,6 +22,9 @@ export function ContactForm() {
   const [form, setForm] = useState<FormState>(initialState);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSending, setIsSending] = useState(false);
+
+  const formspreeEndpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT?.trim() || '';
 
   const isValid = useMemo(() => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,16 +36,53 @@ export function ContactForm() {
     );
   }, [form]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!isValid) {
       setError('入力内容を確認してください（必須項目・文字数・メール形式）。');
       return;
     }
 
-    setError(null);
-    setSubmitted(true);
-    setForm(initialState);
+    if (!formspreeEndpoint) {
+      setError(
+        '送信先が未設定です。NEXT_PUBLIC_FORMSPREE_ENDPOINT を設定して再度お試しください。'
+      );
+      return;
+    }
+
+    try {
+      setError(null);
+      setSubmitted(false);
+      setIsSending(true);
+
+      const response = await fetch(formspreeEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          name: form.name,
+          businessType: form.businessType,
+          instagram: form.instagram,
+          email: form.email,
+          message: form.message,
+          source: 'Lumiere Social website'
+        })
+      });
+
+      if (!response.ok) {
+        setError('送信に失敗しました。時間をおいて再度お試しください。');
+        return;
+      }
+
+      setSubmitted(true);
+      setForm(initialState);
+    } catch {
+      setError('通信エラーが発生しました。接続環境をご確認のうえ再度お試しください。');
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -103,18 +143,20 @@ export function ContactForm() {
       {error ? <p className="text-sm text-red-400">{error}</p> : null}
       {submitted ? (
         <p className="text-sm text-emerald-400">
-          送信を受け付けました（ダミー送信）。通常24時間以内に返信する想定です。
+          送信が完了しました。通常24時間以内を目安に、Lumiere Socialからご連絡します。
         </p>
       ) : null}
 
       <button
         type="submit"
         className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-black transition hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-60"
-        disabled={!isValid}
+        disabled={!isValid || isSending}
       >
-        送信する
+        {isSending ? '送信中...' : '送信する'}
       </button>
-      <p className="text-xs text-white/50">将来的に Formspree などへ接続しやすい構成です。</p>
+      <p className="text-xs text-white/50">
+        Formspree連携（NEXT_PUBLIC_FORMSPREE_ENDPOINT）を利用した実送信フォームです。
+      </p>
     </form>
   );
 }

@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { CTASection } from '@/components/CTASection';
 import { PricingTable } from '@/components/PricingTable';
 import { SectionTitle } from '@/components/SectionTitle';
-import { cases, faqs, servicePackages, strengths } from '@/lib/site';
+import { bookingHref, cases, faqs, servicePackages, strengths } from '@/lib/site';
 
 export default function HomePage() {
   return (
     <div className="mx-auto max-w-6xl space-y-20 px-6 py-14 md:py-20">
       <section className="grid gap-10 md:grid-cols-[1.15fr_0.85fr] md:items-center">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-accent">Instagram Consulting</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-accent">Lumiere Social</p>
           <h1 className="mt-4 text-4xl font-semibold leading-tight md:text-6xl">
             規約配慮×世界観設計で、
             <br className="hidden md:block" />
@@ -21,10 +21,10 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/contact"
+              href={bookingHref}
               className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-black transition hover:opacity-85"
             >
-              無料相談する
+              無料相談（15分）
             </Link>
             <Link
               href="/cases"
